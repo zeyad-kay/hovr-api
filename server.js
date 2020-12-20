@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./config/sequelize'); // pg-pool???
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
