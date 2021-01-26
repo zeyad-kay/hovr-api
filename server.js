@@ -1,14 +1,24 @@
 require('dotenv').config();
-require('./config/sequelize'); // pg-pool???
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-
-const app = express();
-app.use(bodyParser.json());
-app.use(cors())
+const db = require('./db');
+const app = require('./app');
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log(`server listening on port ${port}`);
-});
+
+startApp(app,db);
+
+async function startApp(app, db) {
+    try {
+        await db.authenticate();
+        const define_associations = require('./db/models/associations');
+        define_associations();
+        // await db.sync({ force: true }); // should remove option in production
+        await db.sync();
+        app.listen(port, () => {
+            console.log(`server listening on port ${port}`);
+        });
+    } catch (error) {
+        console.error(error);
+        db.close();
+        process.exit(1);
+    }
+}

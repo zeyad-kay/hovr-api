@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require("../../config/sequelize");
+const sequelize = require("../../../db");
 const Parent = require('../Parent/Parent');
 const Route = require('../Route/Route');
 
@@ -24,7 +24,7 @@ Child.init({
     },
     gender: {
         type: DataTypes.ENUM,
-        values: ['Male', 'Female'],
+        values: ['male', 'female'],
         allowNull: false
     },
     age: {
@@ -37,7 +37,7 @@ Child.init({
             model: Route,
             key: 'id',
         },
-        primaryKey: true
+        unique: true
     },
 }, {
     sequelize,

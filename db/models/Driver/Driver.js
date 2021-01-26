@@ -1,13 +1,13 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require("../../config/sequelize");
+const sequelize = require("../../../db");
 
-class Parent extends Model { };
+class Driver extends Model { };
 
-Parent.init({
+Driver.init({
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,
-        primaryKey: true
+        primaryKey: true,
     },
     full_name: {
         type: DataTypes.STRING,
@@ -16,25 +16,32 @@ Parent.init({
     email: {
         type: DataTypes.STRING,
         validate: {
-            isEmail: true,
+            isEmail: true
         },
+        unique: true,
         allowNull: false
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     mobile: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.TEXT, // Should be changed
+        unique: true,
         allowNull: false
     },
     gender: {
         type: DataTypes.ENUM,
-        values: ['Male','Female'],
+        values: ['male', 'female'],
         allowNull: false
     }
 }, {
     sequelize,
+    indexes: [
+        {
+            fields: ['email']
+        }
+    ]
 });
 
-module.exports = Parent;
+module.exports = Driver;

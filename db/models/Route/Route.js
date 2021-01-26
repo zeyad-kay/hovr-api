@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require("../../config/sequelize");
+const sequelize = require("../../../db");
 const Driver = require('../Driver/Driver');
 class Route extends Model { };
 
@@ -8,15 +8,13 @@ Route.init({
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,
         primaryKey: true,
-        autoIncrement: true
     },
     driver_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         references: {
             model: Driver,
             key: 'id',
         },
-        allowNull: false
     }
 }, {
     sequelize

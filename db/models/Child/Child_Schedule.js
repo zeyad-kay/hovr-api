@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require("../../config/sequelize");
+const sequelize = require("../../../db");
 const Child = require('./Child');
 
 class Child_Schedule extends Model { };
@@ -7,7 +7,7 @@ class Child_Schedule extends Model { };
 Child_Schedule.init({
     day: {
         type: DataTypes.ENUM,
-        values: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+        values: ['Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
         allowNull: false,
         primaryKey: true
     },
@@ -29,6 +29,11 @@ Child_Schedule.init({
     }
 }, {
     sequelize,
+    indexes: [
+        {
+            fields: ['day']
+        }
+    ]
 });
 
 module.exports = Child_Schedule;
