@@ -1,7 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require("../../../db");
-const Parent = require('../Parent/Parent');
-const Route = require('../Route/Route');
+const sequelize = require("../../db");
+const Parent = require('./Parent');
 
 class Child extends Model { };
 
@@ -18,29 +17,34 @@ Child.init({
             key: 'id',
         },
     },
-    name: {
+    first_name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        set(value) {
+            this.setDataValue('first_name', value.toUpperCase())
+        }
     },
     gender: {
         type: DataTypes.ENUM,
-        values: ['male', 'female'],
-        allowNull: false
+        values: ['MALE', 'FEMALE'],
+        allowNull: false,
+        set(value) {
+            this.setDataValue('gender', value.toUpperCase())
+        }
     },
     age: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    route_id: {
-        type: DataTypes.UUID,
-        references: {
-            model: Route,
-            key: 'id',
-        },
-        unique: true
-    },
 }, {
     sequelize,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    indexes: [
+        {
+            fields: ['parent_id']
+        }
+    ]
 })
 
 module.exports = Child;

@@ -1,6 +1,6 @@
-const { Client } = require('@googlemaps/google-maps-services-js')
 const { defaultParamsSerializer } = require("@googlemaps/google-maps-services-js/dist/directions");
 
+const { Client } = require('@googlemaps/google-maps-services-js')
 const client = new Client({});
 
 class MapsService {

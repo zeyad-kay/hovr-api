@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require("../../../db");
+const sequelize = require("../../db");
 const Driver = require('./Driver');
 
 class Driver_Address extends Model { };
@@ -13,9 +13,8 @@ Driver_Address.init({
         },
         primaryKey: true
     },
-    home_address: {
+    home_place_id: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     home_coordinates: {
         type: DataTypes.JSON,
@@ -24,11 +23,13 @@ Driver_Address.init({
             return JSON.parse(this.getDataValue('home_coordinates'))
         },
         set(value) {
-            this.setDataValue('home_coordinates',JSON.stringify(value))
+            this.setDataValue('home_coordinates', JSON.stringify(value))
         }
     }
 }, {
-    sequelize
+    sequelize,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 });
 
 module.exports = Driver_Address;

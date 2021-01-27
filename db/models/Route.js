@@ -1,6 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require("../../../db");
-const Driver = require('../Driver/Driver');
+const sequelize = require("../../db");
+const Driver = require('./Driver');
 class Route extends Model { };
 
 Route.init({
@@ -17,7 +17,14 @@ Route.init({
         },
     }
 }, {
-    sequelize
+    sequelize,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    indexes: [
+        {
+            fields: ['driver_id']
+        }
+    ]
 });
 
 module.exports = Route;

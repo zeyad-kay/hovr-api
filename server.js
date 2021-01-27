@@ -9,10 +9,10 @@ startApp(app,db);
 async function startApp(app, db) {
     try {
         await db.authenticate();
-        const define_associations = require('./db/models/associations');
+        const define_associations = require('./db/associations');
         define_associations();
-        // await db.sync({ force: true }); // should remove option in production
-        await db.sync();
+        await db.sync({ force: true }); // should remove option in production
+        // await db.sync();
         app.listen(port, () => {
             console.log(`server listening on port ${port}`);
         });
